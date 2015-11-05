@@ -1,2 +1,14 @@
-def double(x):
-    return(x * 2)
+
+data goverment[](members[](level,id),laws[](hash,name,description,startDate,endDate), voteCsot);
+
+def createGovernment:
+    return;
+
+def registerVoter:
+    return;
+
+def vote:
+    return;
+
+def voteCount(cash,costForVote):
+    return math.floor(sqrt(cash/votecost));

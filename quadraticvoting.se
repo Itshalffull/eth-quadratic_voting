@@ -1,10 +1,10 @@
 //Basic data
-data voters[](level);
-data proposals[](name, description, startDate,endDate, voteCost, yesVotes, noVotes, money, voters[](votes, yesOrNo));
+data voters[](level)
+data proposals[](name, description, startDate,endDate, voteCost, yesVotes, noVotes, money, voters[](votes, yesOrNo))
 
 //@todo Make a concept of "organizations" so you don't have to be ridiculous like this"
 def registerAdmin():
-    self.voters[msg.sender].level = 1;
+    self.voters[msg.sender].level = 1
 
 def registerProposal(contractID, proposalName, proposalDescription,proposalStartDate, proposalEndDate, proposalVoteCost):
     //Check Permissions
@@ -12,42 +12,42 @@ def registerProposal(contractID, proposalName, proposalDescription,proposalStart
         //Sanity checks
         if not self.proposals[contractID] and self.proposalStartDate >= block.timestamp and self.proposalendDate > self.proposalStartDate:
             //Initialize the proposal
-            self.proposals[] = contractID;
-            self.proposals[contractID].name = proposalName;
-            self.proposals[contractID].description = proposalDescription;
-            self.proposals[contractID].startDate = proposalStartDate;
-            self.proposals[contractID].endDate = proposalEndDate;
-            self.proposals[contractID].voteCost = proposalVoteCost;
-            self.proposals[contractID].yesVotes = 0;
-            self.proposals[contractID].noVotes = 0;
-            self.proposals[contractID].money = 0;
+            self.proposals[] = contractID
+            self.proposals[contractID].name = proposalName
+            self.proposals[contractID].description = proposalDescription
+            self.proposals[contractID].startDate = proposalStartDate
+            self.proposals[contractID].endDate = proposalEndDate
+            self.proposals[contractID].voteCost = proposalVoteCost
+            self.proposals[contractID].yesVotes = 0
+            self.proposals[contractID].noVotes = 0
+            self.proposals[contractID].money = 0
 
 
 def registerVoter(voterID, levelPipe):
     //"Admin" that can register voters
     if self.voters[msg.sender].level == 1:
         //@todo get rid of this whole idea of levels and just have an organization
-        self.voters[voterID].level = levelPipe;
+        self.voters[voterID].level = levelPipe
 
 def voteCount(costForVote, currentVotes):
     //@todo allow for mulitple voting rounds.
-    return ((msg.value/costForVote)**(1/2));
+    return ((msg.value/costForVote)**(1/2))
 
 def vote(proposal, forOrAgainst):
     if self.voters[msg.sender].level >= 0 and self.proposals[proposal]:
         if not self.proposals[proposal].voters[msg.sender] and block.timestamp < self.proposals[proposal].endDate:
-            voteAmount = voteCount(self.proposals[proposal].voteCost, 0);
-            moneySpent = (voteAmount * self.proposals[proposal].voteCost) ** 2;
-            moneyLeft = msg.value - moneySpent;
+            voteAmount = voteCount(self.proposals[proposal].voteCost, 0)
+            moneySpent = (voteAmount * self.proposals[proposal].voteCost) ** 2
+            moneyLeft = msg.value - moneySpent
             //Return the unused money
-            send(msg.sender,moneyLeft);
+            send(msg.sender,moneyLeft)
             //Tally the votes
-            self.proposals[proposal].voters[msg.sender].votes = voteAmount;
+            self.proposals[proposal].voters[msg.sender].votes = voteAmount
             //Against Vote
             if forOrAgainst = 0:
-                self.proposals[proposal].noVotes += voteAmount;
-                self.proposals[proposal].voters[msg.sender].yesOrNo = 0;
+                self.proposals[proposal].noVotes += voteAmount
+                self.proposals[proposal].voters[msg.sender].yesOrNo = 0
             //For Vote
             if forOrAgainst = 1:
-                self.proposals[proposal].yesVotes += voteAmount;
-                self.proposals[proposal].voters[msg.sender].yesOrNo = 0;
+                self.proposals[proposal].yesVotes += voteAmount
+                self.proposals[proposal].voters[msg.sender].yesOrNo = 0

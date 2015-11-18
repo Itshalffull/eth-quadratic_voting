@@ -4,10 +4,21 @@ data proposals[](name, description, startDate,endDate, voteCost, yesVotes, noVot
 def registerAdmin():
     self.voters[msg.sender].level = 1;
 
-def registerProposal(contractID, proposalName, proposalDescription,proposalvoteCost,proposalStartDate, proposalEndDate):
-    if not proposals[contractID] and proposalStartDate >= block.timestamp and proposalendDate > proposalStartDate:
-    proposals[] = contractID;
-    proposals[contractID].name = proposalName;
+def registerProposal(contractID, proposalName, proposalDescription,proposalStartDate, proposalEndDate, proposalVoteCost):
+    //Check Permissions
+    if voters[msg.sender].level = 1
+        //Sanity checks
+        if not proposals[contractID] and proposalStartDate >= block.timestamp and proposalendDate > proposalStartDate:
+            //Initialize the proposal
+            proposals[] = contractID;
+            proposals[contractID].name = proposalName;
+            proposals[contractID].description = proposalDescription;
+            proposals[contractID].startDate = proposalStartDate;
+            proposals[contractID].endDate = proposalEndDate;
+            proposals[contractID].voteCost = proposalVoteCost;
+            proposals[contractID].yesVotes = 0;
+            proposals[contractID].noVotes = 0;
+            proposals[contractID].money = 0;
 
 def registerVoter(voterID, levelPipe):
     if self.voters[msg.sender].level == 1:

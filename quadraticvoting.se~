@@ -1,0 +1,17 @@
+data voters(voterID[], level[]);
+data votes(proposalHash[](name, description, votecost, yesvotes, novotes, money, voters[](votes,));
+
+def registerAdmin():
+    self.voters[msg.sender].level = 1;
+
+def registerVoter(voterID, levelPipe):
+    if self.voters[msg.sender].level == 1:
+        self.voters[voterID].level = levelPipe;
+
+def voteCount(costForVote, currentVotes):
+    return ((msg.value/costForVote)**(1/2));
+
+def vote(proposal):
+    if voters[msg.sender].level >= 0 and votes.proposalHash[proposal]
+        if not votes.proposalHash[proposal].voters[msg.sender]
+            voteCount(votes.proposalHash[proposal].votecost)

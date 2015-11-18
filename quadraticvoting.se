@@ -1,5 +1,5 @@
 //Basic data
-data voters[](level)
+data voters[](exists, level)
 data proposals[](exists, name, description, startDate,endDate, voteCost, yesVotes, noVotes, money, voters[](exists, votes, yesOrNo))
 
 //@todo Make a concept of "organizations" so you don't have to be ridiculous like this"
@@ -27,8 +27,9 @@ def registerVoter(voterID, levelPipe):
     //"Admin" that can register voters
     if self.voters[msg.sender].level == 1:
         //@todo get rid of this whole idea of levels and just have an organization
-        self.voters[voterID].level = levelPipe
         self.voters[voterID].exists = 1
+        self.voters[voterID].level = levelPipe
+
 
 def voteCount(costForVote, currentVotes):
     //@todo allow for mulitple voting rounds.

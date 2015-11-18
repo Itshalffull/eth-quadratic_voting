@@ -1,6 +1,6 @@
 //Basic data
 data voters[](level)
-data proposals[](exists, name, description, startDate,endDate, voteCost, yesVotes, noVotes, money, voters[](votes, yesOrNo))
+data proposals[](exists, name, description, startDate,endDate, voteCost, yesVotes, noVotes, money, voters[](exists, votes, yesOrNo))
 
 //@todo Make a concept of "organizations" so you don't have to be ridiculous like this"
 def registerAdmin():
@@ -28,6 +28,7 @@ def registerVoter(voterID, levelPipe):
     if self.voters[msg.sender].level == 1:
         //@todo get rid of this whole idea of levels and just have an organization
         self.voters[voterID].level = levelPipe
+        self.voters[voterID].exists = 1
 
 def voteCount(costForVote, currentVotes):
     //@todo allow for mulitple voting rounds.
@@ -35,7 +36,7 @@ def voteCount(costForVote, currentVotes):
 
 def vote(proposal, forOrAgainst):
     if self.voters[msg.sender].level >= 0 and self.proposals[proposal].exists:
-        if not self.proposals[proposal].voters[msg.sender] and block.timestamp < self.proposals[proposal].endDate:
+        if not self.proposals[proposal].voters[msg.sender].exists and block.timestamp < self.proposals[proposal].endDate:
             voteAmount = voteCount(self.proposals[proposal].voteCost, 0)
             moneySpent = (voteAmount * self.proposals[proposal].voteCost) ** 2
             moneyLeft = msg.value - moneySpent

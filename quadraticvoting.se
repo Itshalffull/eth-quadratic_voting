@@ -1,5 +1,5 @@
 //Basic data
-data voters[](level[]);
+data voters[](level);
 data proposals[](name, description, startDate,endDate, voteCost, yesVotes, noVotes, money, voters[](votes, yesOrNo));
 
 //@todo Make a concept of "organizations" so you don't have to be ridiculous like this"
@@ -8,7 +8,7 @@ def registerAdmin():
 
 def registerProposal(contractID, proposalName, proposalDescription,proposalStartDate, proposalEndDate, proposalVoteCost):
     //Check Permissions
-    if self.voters[msg.sender].level = 1
+    if self.voters[msg.sender].level = 1:
         //Sanity checks
         if not self.proposals[contractID] and self.proposalStartDate >= block.timestamp and self.proposalendDate > self.proposalStartDate:
             //Initialize the proposal
@@ -36,8 +36,8 @@ def voteCount(costForVote, currentVotes):
 def vote(proposal, forOrAgainst):
     if self.voters[msg.sender].level >= 0 and self.proposals[proposal]:
         if not self.proposals[proposal].voters[msg.sender] and block.timestamp < self.proposals[proposal].endDate:
-            voteAmount = voteCount(proposals[proposal].voteCost, 0);
-            moneySpent = (voteAmount * proposals[proposal.voteCost]) ** 2
+            voteAmount = voteCount(self.proposals[proposal].voteCost, 0);
+            moneySpent = (voteAmount * self.proposals[proposal].voteCost) ** 2;
             moneyLeft = msg.value - moneySpent;
             //Return the unused money
             send(msg.sender,moneyLeft);

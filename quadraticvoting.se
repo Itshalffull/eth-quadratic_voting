@@ -1,8 +1,13 @@
-data voters(voterID[], level[]);
-data votes(proposalHash[](name, description, votecost, yesvotes, novotes, money, voters[](votes,));
+data voters[](level[]);
+data proposals[](name, description, startDate,endDate, voteCost, yesVotes, noVotes, money, voters[](votes, yesOrNo));
 
 def registerAdmin():
     self.voters[msg.sender].level = 1;
+
+def registerProposal(contractID, proposalName, proposalDescription,proposalvoteCost,proposalStartDate, proposalEndDate):
+    if not proposals[contractID] and proposalStartDate >= block.timestamp and proposalendDate > proposalStartDate:
+    proposals[] = contractID;
+    proposals[contractID].name = proposalName;
 
 def registerVoter(voterID, levelPipe):
     if self.voters[msg.sender].level == 1:
@@ -11,7 +16,21 @@ def registerVoter(voterID, levelPipe):
 def voteCount(costForVote, currentVotes):
     return ((msg.value/costForVote)**(1/2));
 
-def vote(proposal):
-    if voters[msg.sender].level >= 0 and votes.proposalHash[proposal]
-        if not votes.proposalHash[proposal].voters[msg.sender]
-            voteCount(votes.proposalHash[proposal].votecost)
+def vote(proposal, forOrAgainst):
+    if voters[msg.sender].level >= 0 and proposals[proposal]:
+        if not proposals[proposal].voters[msg.sender] and block.timestamp < proposals[proposal].endDate:
+            voteAmount = voteCount(proposals[proposal].voteCost, 0);
+            moneySpent = (voteAmount * proposals[proposal.voteCost]) ** 2
+            moneyLeft = msg.value - moneySpent;
+            //Return the unused money
+            send(msg.sender,moneyLeft);
+            //Tally the votes
+            proposals[proposal].voters[msg.sender].votes = voteAmount;
+            //Against Vote
+            if forOrAgainst = 0:
+                proposals[proposal].noVotes += voteAmount;
+                proposals[proposal].voters[msg.sender].yesOrNo = 0;
+            //For Vote
+            if forOrAgainst = 1:
+                proposals[proposal].yesVotes += voteAmount;
+                proposals[proposal].voters[msg.sender].yesOrNo = 0;

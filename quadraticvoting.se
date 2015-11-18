@@ -12,7 +12,6 @@ def registerProposal(contractID, proposalName, proposalDescription,proposalStart
         //Sanity checks
         if not self.proposals[contractID].exists and proposalStartDate >= block.timestamp and proposalendDate > proposalStartDate:
             //Initialize the proposal
-            self.proposals[] = contractID
             self.proposals[contractID].exists = 1
             self.proposals[contractID].name = proposalName
             self.proposals[contractID].description = proposalDescription

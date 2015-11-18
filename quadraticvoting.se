@@ -10,7 +10,7 @@ def registerProposal(contractID, proposalName, proposalDescription,proposalStart
     //Check Permissions
     if self.voters[msg.sender].level = 1:
         //Sanity checks
-        if not self.proposals[contractID] and self.proposalStartDate >= block.timestamp and self.proposalendDate > self.proposalStartDate:
+        if not self.proposals[contractID] and proposalStartDate >= block.timestamp and proposalendDate > proposalStartDate:
             //Initialize the proposal
             self.proposals[] = contractID
             self.proposals[contractID].name = proposalName

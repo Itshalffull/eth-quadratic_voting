@@ -1,6 +1,6 @@
 //Basic data
 data voters[](level)
-data proposals[](name, description, startDate,endDate, voteCost, yesVotes, noVotes, money, voters[](votes, yesOrNo))
+data proposals[](exists, name, description, startDate,endDate, voteCost, yesVotes, noVotes, money, voters[](votes, yesOrNo))
 
 //@todo Make a concept of "organizations" so you don't have to be ridiculous like this"
 def registerAdmin():
@@ -10,9 +10,10 @@ def registerProposal(contractID, proposalName, proposalDescription,proposalStart
     //Check Permissions
     if self.voters[msg.sender].level = 1:
         //Sanity checks
-        if not self.proposals[contractID] and proposalStartDate >= block.timestamp and proposalendDate > proposalStartDate:
+        if not self.proposals[contractID].exists and proposalStartDate >= block.timestamp and proposalendDate > proposalStartDate:
             //Initialize the proposal
             self.proposals[] = contractID
+            self.proposals[contractID].exists = 1
             self.proposals[contractID].name = proposalName
             self.proposals[contractID].description = proposalDescription
             self.proposals[contractID].startDate = proposalStartDate

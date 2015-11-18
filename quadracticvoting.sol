@@ -3,6 +3,7 @@ contract Quadractic{
 	struct votingRules {
 		bool ethCurrency;
 		uint voteCost;
+		
 	}
 	struct proposal {
 		bytes32 name;
@@ -12,5 +13,6 @@ contract Quadractic{
 	}
 
 	function voteBuyer{
+		if votingRules.ethCurrency
 	}
 }

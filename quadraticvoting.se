@@ -31,14 +31,14 @@ def registerVoter(voterID, levelPipe):
         self.voters[voterID].level = levelPipe
 
 
-def voteCount(costForVote, currentVotes):
+def voteCount(costForVote):
     //@todo allow for mulitple voting rounds.
     return ((msg.value/costForVote)**(1/2))
 
 def vote(proposal, forOrAgainst):
     if self.voters[msg.sender].level >= 0 and self.proposals[proposal].exists:
         if not self.proposals[proposal].voters[msg.sender].exists and block.timestamp < self.proposals[proposal].endDate:
-            voteAmount = voteCount(self.proposals[proposal].voteCost, 0)
+            voteAmount = voteCount(self.proposals[proposal].voteCost)
             moneySpent = (voteAmount * self.proposals[proposal].voteCost) ** 2
             moneyLeft = msg.value - moneySpent
             //Return the unused money

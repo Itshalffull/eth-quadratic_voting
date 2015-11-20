@@ -50,6 +50,6 @@ def vote(proposal, forOrAgainst):
                 self.proposals[proposal].noVotes += voteAmount
                 self.proposals[proposal].voters[msg.sender].yesOrNo = 0
             //For Vote
-            if forOrAgainst = 1:
+            if forOrAgainst == 1:
                 self.proposals[proposal].yesVotes += voteAmount
                 self.proposals[proposal].voters[msg.sender].yesOrNo = 0

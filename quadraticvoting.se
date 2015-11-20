@@ -38,7 +38,7 @@ def voteCount(costForVote):
 def vote(proposal, forOrAgainst):
     if self.voters[msg.sender].level >= 0 and self.proposals[proposal].exists:
         if not self.proposals[proposal].voters[msg.sender].exists and block.timestamp < self.proposals[proposal].endDate:
-            voteAmount = voteCount(self.proposals[proposal].voteCost)
+            voteAmount = msg.value/(self.proposals[proposal].voteCost)**(1/2)
             moneySpent = (voteAmount * self.proposals[proposal].voteCost) ** 2
             moneyLeft = msg.value - moneySpent
             //Return the unused money

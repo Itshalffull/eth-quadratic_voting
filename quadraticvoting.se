@@ -8,7 +8,7 @@ def registerAdmin():
 
 def registerProposal(contractID, proposalName, proposalDescription,proposalStartDate, proposalEndDate, proposalVoteCost):
     //Check Permissions
-    if self.voters[msg.sender].level = 1:
+    if self.voters[msg.sender].level == 1:
         //Sanity checks
         if not self.proposals[contractID].exists and proposalStartDate >= block.timestamp and proposalendDate > proposalStartDate:
             //Initialize the proposal

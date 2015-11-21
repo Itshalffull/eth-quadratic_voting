@@ -39,7 +39,7 @@ def givePermission(organization, account,permission):
         else:
             return(0)
     //RegisterVoters Accounts allowed to register voters can give the "Vote" permission.
-    elif self.organizations[organization].members[msg.sender].permissions["RegisterVoters"]
+    else if self.organizations[organization].members[msg.sender].permissions["RegisterVoters"]:
         if not self.organizations[msg.sender].members[voterRegID].permissions["Vote"]:
             self.organizations[organization].members[account].exists = 1
             self.organizations[organization].members[account].permissions[] = "Vote"

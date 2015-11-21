@@ -3,8 +3,8 @@ data organizations[](exists, name, settings(voteCost), members[](exists, permiss
 
 //Register an organization, and give that account admin access
 def registerOrganization(name):
-    organizationArray[name,msg.sender]
-    organizationHash = sha256(organizationArray[], items = 2)
+    organizationArray = [name,msg.sender]
+    organizationHash = sha256(organizationArray, items = 2)
     if not organizations[organizationHash].exists:
         self.organizations[organizationHash].exists = 1
         self.organizations[organizationHash].name = name
@@ -52,7 +52,7 @@ def givePermission(organization, account,permission):
 def registerProposal(organization, contract, proposalName, proposalDescription,proposalStartDate, proposalEndDate, proposalVoteCost):
     //Check Permissions
     if self.organizations[organization].members[msg.sender].permission["RegisterProposals"]:
-        proposalArray[] = organization + contract + proposalName + proposalDescription + proposalStartDate + proposalEndDate + proposalVoteCost
+        proposalArray = [organization, contract, proposalName, proposalDescription, proposalStartDate, proposalEndDate, proposalVoteCost]
         proposal = sha256(proposalArray, items = 7)
         //Sanity checks
         if not self.organizations[organization].proposals[proposal].exists and proposalStartDate >= block.timestamp and proposalendDate > proposalStartDate:

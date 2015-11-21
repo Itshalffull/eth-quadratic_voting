@@ -3,7 +3,7 @@ data organizations[](exists, name, settings(voteCost), members[](exists, permiss
 
 //Register an organization, and give that account admin access
 def registerOrganization(name):
-    organizationArray[] = name + msg.sender
+    organizationArray[name,msg.sender]
     organizationHash = sha256(organizationArray[], items = 2)
     if not organizations[organizationHash].exists:
         self.organizations[organizationHash].exists = 1

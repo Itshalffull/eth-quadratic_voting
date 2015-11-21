@@ -80,7 +80,7 @@ def voteCount(costForVote):
 def vote(organization, proposal, forOrAgainst):
     if self.organizations[organization].members[msg.sender].permissions["Vote"] and self.organizations[organization].proposals[proposal].exists:
         //@todo allow for multiple voting rounds before time expires.
-        if not self.organizations[organization.proposals[proposal].voters[msg.sender].exists and block.timestamp < self.organizations[organization].proposals[proposal].endDate:
+        if not self.organizations[organization].proposals[proposal].voters[msg.sender].exists and block.timestamp < self.organizations[organization].proposals[proposal].endDate:
             voteAmount = msg.value/(self.organizations[organization].proposals[proposal].voteCost)**(1/2)
             moneySpent = (voteAmount * self.organizations[organization].proposals[proposal].voteCost) ** 2
             moneyLeft = msg.value - moneySpent

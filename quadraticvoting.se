@@ -1,55 +1,97 @@
-//Basic data
-data voters[](exists, level)
-data proposals[](exists, name, description, startDate,endDate, voteCost, yesVotes, noVotes, money, voters[](exists, votes, yesOrNo))
+//Simple Quadratic Voting script that allows any person or contract to register an organization. The creator becomes the admin, and can then add lower level permissions for accounts who can register voters, register proposals, and vote.
+data organizations[](exists, name, settings(voteCost), members[](exists, permissions[]), proposals[](exists, name, description, contract, startDate,endDate, yesVotes, noVotes, money, voters[](exists, votes, yesOrNo))
 
-//@todo Make a concept of "organizations" so you don't have to be ridiculous like this"
-def registerAdmin():
-    self.voters[msg.sender].level = 1
+//Register an organization, and give that account admin access
+def registerOrganization(name):
+    organizationArray[] = name + msg.sender
+    organizationHash = sha256(organizationArray[], items = 2)
+    if not organizations[organizationHash].exists:
+        self.organizations[organizationHash].exists = 1
+        self.organizations[organizationHash].name = name
+        self.organizations[organizationHash].members[msg.sender].permissions[] = "Administrate"
+        self.organizations[organizationHash].members[msg.sender].permissions[] = "RegisterVoters"
+        self.organizations[organizationHash].members[msg.sender].permissions[] = "DeleteVoters"
+        self.organizations[organizationHash].members[msg.sender].permissions[] = "RegisterProposals"
+        self.organizations[organizationHash].members[msg.sender].permissions[] = "DeleteProposals"
+        self.organizations[organizationHash].members[msg.sender].permissions[] = "Vote"
+    else:
+        return(0)
 
-def registerProposal(contractID, proposalName, proposalDescription,proposalStartDate, proposalEndDate, proposalVoteCost):
+//Give another account permissions:
+//@Todo: create a general purpose permissions contract
+//Permissions Allowed:
+    //Administrate: Change any permission
+    //RegisterVoters: Allow to add new voters
+    //DeleteVoters: Allow to remove voters
+    //RegisterProposals: Allow to add proposals
+    //DeleteProposals: Allow to delete proposals
+    //Vote: Allowed to vote
+def givePermission(organization, account,permission):
+    //Only adminstrators can give permissions besides "vote"
+    if self.organizations[organization].members[msg.sender].permissions["Administrate"]:
+        if permission == "Admininstrate" or permission == "RegisterVoters" or permission == "DeleteVoters" or permission == "RegisterProposals" or permission == "DeleteProposals" or permission == "Vote":
+            if not self.organizations[organization].members[account].permissions[permission]:
+                self.organizations[organization].members[account].permissions[] = permission
+                self.organizations[organization].members[account].exists = 1
+                return(1)
+            else:
+                return(0)
+        else:
+            return(0)
+    //RegisterVoters Accounts allowed to register voters can give the "Vote" permission.
+    elif self.organizations[organization].members[msg.sender].permissions["RegisterVoters"]
+            if not self.organizations[msg.sender].members[voterRegID].permissions["Vote"]:
+                self.organizations[organization].members[account].exists = 1
+                self.organizations[organization].members[account].permissions[] = "Vote"
+            return(1)
+        else:
+            return(0)
+    else:
+        return(0)
+
+def registerProposal(organization, contract, proposalName, proposalDescription,proposalStartDate, proposalEndDate, proposalVoteCost):
     //Check Permissions
-    if self.voters[msg.sender].level == 1:
+    if self.organizations[organization].members[msg.sender].permission["RegisterProposals"]:
+        proposalArray[] = organization + contract + proposalName + proposalDescription + proposalStartDate + proposalEndDate + proposalVoteCost
+        proposal = sha256(proposalArray, items = 7)
         //Sanity checks
-        if not self.proposals[contractID].exists and proposalStartDate >= block.timestamp and proposalendDate > proposalStartDate:
+        if not self.organizations[organization].proposals[proposal].exists and proposalStartDate >= block.timestamp and proposalendDate > proposalStartDate:
             //Initialize the proposal
-            self.proposals[contractID].exists = 1
-            self.proposals[contractID].name = proposalName
-            self.proposals[contractID].description = proposalDescription
-            self.proposals[contractID].startDate = proposalStartDate
-            self.proposals[contractID].endDate = proposalEndDate
-            self.proposals[contractID].voteCost = proposalVoteCost
-            self.proposals[contractID].yesVotes = 0
-            self.proposals[contractID].noVotes = 0
-            self.proposals[contractID].money = 0
-
-
-def registerVoter(voterID, levelPipe):
-    //"Admin" that can register voters
-    if self.voters[msg.sender].level == 1:
-        //@todo get rid of this whole idea of levels and just have an organization
-        self.voters[voterID].exists = 1
-        self.voters[voterID].level = levelPipe
-
+            self.organizations[organization].proposals[proposal].exists = 1
+            self.organizations[organization].proposals[proposal].name = proposalName
+            self.organizations[organization].proposals[proposal].description = proposalDescription
+            self.organizations[organization].proposals[proposal].startDate = proposalStartDate
+            self.organizations[organization].proposals[proposal].endDate = proposalEndDate
+            self.organizations[organization].proposals[proposal].voteCost = proposalVoteCost
+            self.organizations[organization].proposals[proposal].yesVotes = 0
+            self.organizations[organization].proposals[proposal].noVotes = 0
+            self.organizations[organization].proposals[proposal].money = 0
+            return(1)
+        else:
+            return(0)
+    else:
+        return(0)
 
 def voteCount(costForVote):
     //@todo allow for mulitple voting rounds.
     return ((msg.value/costForVote)**(1/2))
 
-def vote(proposal, forOrAgainst):
-    if self.voters[msg.sender].level >= 0 and self.proposals[proposal].exists:
-        if not self.proposals[proposal].voters[msg.sender].exists and block.timestamp < self.proposals[proposal].endDate:
-            voteAmount = msg.value/(self.proposals[proposal].voteCost)**(1/2)
-            moneySpent = (voteAmount * self.proposals[proposal].voteCost) ** 2
+//@tado Add vitaliks ring signatures implementation for anonymous voting
+def vote(organization, proposal, forOrAgainst):
+    if self.organizations[organization].members[msg.sender].permissions["Vote"] and self.organizations[organization].proposals[proposal].exists:
+        //@todo allow for multiple voting rounds before time expires.
+        if not self.organizations[organization.proposals[proposal].voters[msg.sender].exists and block.timestamp < self.organizations[organization].proposals[proposal].endDate:
+            voteAmount = msg.value/(self.organizations[organization].proposals[proposal].voteCost)**(1/2)
+            moneySpent = (voteAmount * self.organizations[organization].proposals[proposal].voteCost) ** 2
             moneyLeft = msg.value - moneySpent
             //Return the unused money
             send(msg.sender,moneyLeft)
             //Tally the votes
-            self.proposals[proposal].voters[msg.sender].votes = voteAmount
+            self.organizations[organization].proposals[proposal].voters[msg.sender].votes = voteAmount
+            self.organizations[organization].proposals[proposal].voters[msg.sender].yesOrNo = forOrAgainst
             //Against Vote
             if forOrAgainst == 0:
-                self.proposals[proposal].noVotes += voteAmount
-                self.proposals[proposal].voters[msg.sender].yesOrNo = 0
+                self.organizations[organization].proposals[proposal].noVotes += voteAmount
             //For Vote
             if forOrAgainst == 1:
-                self.proposals[proposal].yesVotes += voteAmount
-                self.proposals[proposal].voters[msg.sender].yesOrNo = 0
+                self.organizations[organization].proposals[proposal].yesVotes += voteAmount

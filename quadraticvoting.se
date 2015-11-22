@@ -73,7 +73,7 @@ def registerProposal(organization, contract, proposalName, proposalDescription,p
         return(0)
 
 def voteCount(costForVote):
-    //@todo allow for mulitple voting rounds.
+    //@todo allow for mulitple voting rounds.j
     return ((msg.value/costForVote)**(1/2))
 
 //@tado Add vitaliks ring signatures implementation for anonymous voting

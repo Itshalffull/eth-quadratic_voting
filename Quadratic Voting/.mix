@@ -1,0 +1,130 @@
+{
+	"applicationUrlEth": "",
+	"applicationUrlHttp": "",
+	"deployBlockNumber": "",
+	"deploymentAddresses": {},
+	"deploymentDir": "",
+	"files": [
+		{
+			"fileName": "contract.sol",
+			"title": "Contract"
+		},
+		{
+			"fileName": "index.html",
+			"title": "index.html"
+		},
+		{
+			"fileName": "quadraticvoting.se",
+			"title": "quadraticvoting.se"
+		},
+		{
+			"fileName": "quadraticinterface.html",
+			"title": "quadraticinterface.html"
+		}
+	],
+	"lastPackageDate": "",
+	"localPackageUrl": "",
+	"packageBase64": "",
+	"packageHash": "",
+	"registerContentHashBlockNumber": -1,
+	"registerContentHashTrHash": "",
+	"registerUrlBlockNumber": -1,
+	"registerUrlTrHash": "",
+	"title": "Quadratic Voting",
+	"states": [
+		{
+			"accounts": [
+				{
+					"address": "38f388fadf4a6a35c61c3f88194ec5ae162c8944",
+					"balance": {
+						"unit": 12,
+						"value": "1000000"
+					},
+					"name": "Account-38f3",
+					"secret": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074"
+				},
+				{
+					"address": "f1c20d13379822f9e0e56a9285394fa711a3cd1d",
+					"balance": {
+						"unit": 18,
+						"value": "0"
+					},
+					"name": "Account-f1c2",
+					"secret": "926823a1ace66e14b5183e96c2b811ff9c0ed418ef4c4bd8ac226339c9a7e13a"
+				},
+				{
+					"address": "2d463dfefe3b6db611a34b81e913f3f0e98c0966",
+					"balance": {
+						"unit": 18,
+						"value": "0"
+					},
+					"name": "Account-2d46",
+					"secret": "3ee978cf2612673b77ac5003ba0519797a8865b6b10ef5ed1856b870293658cf"
+				}
+			],
+			"blocks": [
+				{
+					"hash": "",
+					"number": 1,
+					"status": "mined",
+					"transactions": []
+				},
+				{
+					"hash": "",
+					"number": 2,
+					"status": "mined",
+					"transactions": []
+				},
+				{
+					"hash": "",
+					"number": 3,
+					"status": "mined",
+					"transactions": []
+				},
+				{
+					"hash": "",
+					"number": -1,
+					"status": "pending",
+					"transactions": []
+				}
+			],
+			"contracts": [],
+			"miner": {
+				"address": "38f388fadf4a6a35c61c3f88194ec5ae162c8944",
+				"balance": {
+					"objectName": "",
+					"value": "1000000",
+					"unit": 12
+				},
+				"name": "Account-38f3",
+				"secret": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074"
+			},
+			"title": "Default",
+			"transactions": [
+				{
+					"contractId": "Contract",
+					"functionId": "Contract",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "Contract.Contract()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				}
+			]
+		}
+	],
+	"defaultStateIndex": 0
+}

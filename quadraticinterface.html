@@ -3,6 +3,22 @@
   <title>Testing Web3</title>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js">
+  <script type="text/javascript">
+  ///First web3.eth.watch code to monitor coinbase
+  var web3 = require('web3');
+  web3.eth.watch('chain').changed(function(){
+    var coinbase = web3.eth.coinbase;
+    document.getElementById(coinbase).innerText = coinbase;
+  });
+
+  ///Insert your contract address var here:
+
+
+  ///Second web3.eth.watch code to monitor block number
+
+
+  </script>
+
 </head>
 
 <body>
@@ -21,20 +37,6 @@
     <h5>Favourite Python: <strong id="favouritePython"></strong></h5>
     <br>
   </div>
-  <script type="text/javascript">
-  ///First web3.eth.watch code to monitor coinbase
-  web3.eth.watch('chain').changed(function(){
-    var coinbase = web3.eth.coinbase;
-    document.getElementById('coinbase').innerText = coinbase;
-  });
-
-  ///Insert your contract address var here:
-
-
-  ///Second web3.eth.watch code to monitor block number
-
-
-  </script>
 
 </body>
 
